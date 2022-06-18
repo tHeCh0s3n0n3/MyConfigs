@@ -1,0 +1,13 @@
+[user]
+   name = Tarek Fadel
+   email = dev@tarekfadel.com
+[init]
+   defaultBranch = main
+[color]
+   ui = true
+[alias]
+   co = checkout
+   ci = commit
+   st = status
+   br = branch
+   hist = log --pretty=format:\"%Cgreen%h%Creset %ad | %Cgreen%d%Creset %s %Cblue[%an]\" --graph --date=local

@@ -1,0 +1,189 @@
+# yaml-language-server https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+final_space: true
+version: 2
+console_title_template: '{{ if .Root }}Administrator: {{ end }}{{ if contains .Shell "pwsh" }}Powershell{{ else }}{{ .Shell }}{{ end }} in {{ .Folder }}'
+blocks:
+- type: "prompt"
+  alignment: "left"
+  segments:
+  - type: "os"
+    background: "transparent"
+    foreground: "#ffffff"
+    style: "plain"
+    template: "{{ if .WSL }}WSL {{ end }}{{ .Icon }} "
+  - type: "session"
+    background: "#c386f1"
+    foreground: "#ffffff"
+    #leading_diamond: ""
+    style: "diamond"
+    template: " 👤{{ .UserName }} "
+  - type: "session"
+    background: "#000000"
+    foreground: "#ffff00"
+    style: "diamond"
+    template: " {{if .SSHSession }}{{ else }}🖥️{{ end }} {{ .HostName }}"
+    trailing_diamond: ""
+  - type: "path"
+    background: "#ff479c"
+    foreground: "#ffffff"
+    powerline_symbol: ""
+    properties:
+      folder_separator_icon: "  "
+      home_icon: "~"
+      style: "folder"
+    style: "powerline"
+    template: "   {{ .Path }} "
+  - type: "git"
+    background: "#fffb38"
+    background_templates:
+    - "{{ if or (.Working.Changed) (.Staging.Changed) }}#FF9248{{ end }}"
+    - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#ff4500{{ end }}"
+    - "{{ if gt .Ahead 0 }}#B388FF{{ end }}"
+    - "{{ if gt .Behind 0 }}#B388FF{{ end }}"
+    foreground: "#193549"
+    leading_diamond: ""
+    powerline_symbol: ""
+    properties:
+      branch_max_length: 25
+      fetch_stash_count: true
+      fetch_status: true
+      fetch_upstream_icon: true
+    style: "powerline"
+    template: " {{ .UpstreamIcon }}{{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed
+      }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed)
+      }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if
+      gt .StashCount 0 }}  {{ .StashCount }}{{ end }} "
+    trailing_diamond": ""
+  - type: "node"
+    background: "#6CA35E"
+    foreground: "#ffffff"
+    powerline_symbol: ""
+    properties:
+      fetch_version": true
+    style: "powerline"
+    template: "  {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{
+      .Full }} "
+  - type: "go"
+    background: "#8ED1F7"
+    foreground: "#111111"
+    powerline_symbol: ""
+    properties:
+      fetch_version: true
+    style: "powerline"
+    template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+  - type: "julia"
+    background: "#4063D8"
+    foreground: "#111111"
+    powerline_symbol: ""
+    properties:
+      fetch_version: true
+    style: "powerline"
+    template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+  - type: "python"
+    background: "#FFDE57"
+    foreground: "#111111"
+    powerline_symbol: ""
+    properties:
+      display_mode": "files"
+      fetch_virtual_env": false
+    style: "powerline"
+    template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+  - type: "ruby"
+    background: "#AE1401"
+    foreground: "#ffffff"
+    powerline_symbol: ""
+    properties:
+      display_mode: "files"
+      fetch_version: true
+    style: "powerline"
+    template": "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+  - type: "php"
+    background: "#4063D8"
+    foreground: "#ffffff"
+    powerline_symbol: ""
+    properties:
+      display_mode: "files"
+    style: "powerline"
+    template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+  - type: "azfunc"
+    background: "#FEAC19"
+    foreground: "#ffffff"
+    powerline_symbol: ""
+    properties:
+      display_mode: "files"
+      fetch_version: false
+    style: "powerline"
+    template: " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+  - type: "aws"
+    background_templates: 
+    - "{{if contains \"default\" .Profile}}#FFA400{{end}}"
+    - "{{if contains \"jan\" .Profile}}#f1184c{{end}}"
+    foreground: "#ffffff"
+    powerline_symbol: ""
+    properties:
+      display_default: false
+    style: "powerline"
+    template: "  {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} "
+  - type: "root"
+    background: "#ffff66"
+    foreground: "#111111"
+    powerline_symbol: ""
+    style: "powerline"
+    template: " # "
+  #- type: "executiontime"
+  #  background: "#83769c"
+  #  foreground: "#ffffff"
+  #  properties:
+  #    always_enabled: true
+  #  style: "plain"
+  #  template: "<transparent></> ﮫ{{ .FormattedMs }}⠀"
+  # - type: exit
+  #   background: "#00897b"
+  #   background_templates: 
+  #   - "{{ if gt .Code 0 }}#e91e63{{ end }}"
+  #   foreground: "#ffffff"
+  #   properties:
+  #     always_enabled: true
+  #   style: "diamond"
+  #   template: "<parentBackground></>  "
+  #   trailing_diamond: ""
+# - type: "rprompt"
+#   segments: 
+#   - type: "shell"
+#     background: "#0077c2"
+#     foreground: "#ffffff"
+#     style: "plain"
+#     template: "<transparent></>  {{ .Name }} <transparent,#0077c2></>"
+#   - type: "ytm"
+#     background: "#1BD760"
+#     foreground: "#111111"
+#     invert_powerline: true
+#     powerline_symbol: ""
+#     properties:
+#       paused_icon: " "
+#       playing_icon: " "
+#     style: "powerline"
+#     template: "  {{ .Icon }}{{ if ne .Status "stopped" }}{{ .Artist }} - {{ .Track }}{{ end }}"
+#   - type: "battery"
+#     background: "#f36943"
+#     background_templates:
+#     - "{{if eq \"Charging\" .State.String}}#40c4ff{{end}}"
+#     - "{{if eq \"Discharging\" .State.String}}#ff5722{{end}}"
+#     - "{{if eq \"Full\" .State.String}}#4caf50{{end}}"
+#     foreground: "#ffffff"
+#     invert_powerline: true
+#     powerline_symbol: ""
+#     properties:
+#       charged_icon: " "
+#       charging_icon: " "
+#       discharging_icon: " "
+#     style: "powerline"
+#     template: " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }}\uf295 "
+#   - type: "time"
+#     background: "#2e9599"
+#     foreground: "#111111"
+#     invert_powerline: true
+#     leading_diamond: ""
+#     style: "diamond"
+#     template: " {{ .CurrentDate | date .Format }} "
+#     trailing_diamond: ""
