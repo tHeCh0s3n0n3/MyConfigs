@@ -23,3 +23,5 @@ while true; do
     * ) echo "Skipping"; break;;
   esac
 done
+
+# vim: syntax=sh ts=2 sw=2 sts=2 sr et
