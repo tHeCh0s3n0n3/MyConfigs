@@ -3,6 +3,16 @@
 echo "Copying .gitconfig to home directory"
 cp ./.gitconfig ~/
 
+if [ ! -d ~/.poshthemes ];then
+  echo "Directory ~/.poshthemes doesn't exist."
+  read -p "Create '~/.poshthemes' directory? [y/N]" createInHomeResponse
+
+  case $createInHomeResponse in
+    [Yy]* ) echo "Creating..."; mkdir ~/.poshthemes; break;;
+    * ) echo "Terminating!"; exit 1; break;;
+  esac
+fi
+
 echo "Copying tarekf.omp.yaml to ~/poshthemes"
 cp ./oh-my-posh/tarekf.omp.yaml ~/.poshthemes/
 
