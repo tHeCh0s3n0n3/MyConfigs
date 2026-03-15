@@ -13,7 +13,7 @@ if [ ! -d ~/.poshthemes ];then
   esac
 fi
 
-echo "Copying tarekf.omp.yaml to ~/poshthemes"
+echo "Copying tarekf.omp.yaml to ~/.poshthemes"
 cp ./oh-my-posh/tarekf.omp.yaml ~/.poshthemes/
 
 while true; do
