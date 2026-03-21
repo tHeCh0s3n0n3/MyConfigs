@@ -1,189 +1,213 @@
-# yaml-language-server https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+version: 3
 final_space: true
-version: 2
 console_title_template: '{{ if .Root }}Administrator: {{ end }}{{ if contains .Shell "pwsh" }}Powershell{{ else }}{{ .Shell }}{{ end }} in {{ .Folder }}'
 blocks:
-- type: "prompt"
-  alignment: "left"
-  segments:
-  - type: "os"
-    background: "transparent"
-    foreground: "#ffffff"
-    style: "plain"
-    template: "{{ if .WSL }}WSL {{ end }}{{ .Icon }} "
-  - type: "session"
-    background: "#c386f1"
-    foreground: "#ffffff"
-    #leading_diamond: ""
-    style: "diamond"
-    template: " 👤{{ .UserName }} "
-  - type: "session"
-    background: "#000000"
-    foreground: "#ffff00"
-    style: "diamond"
-    template: " {{if .SSHSession }}{{ else }}🖥️{{ end }} {{ .HostName }}"
-    trailing_diamond: ""
-  - type: "path"
-    background: "#ff479c"
-    foreground: "#ffffff"
-    powerline_symbol: ""
-    properties:
-      folder_separator_icon: "  "
-      home_icon: "~"
-      style: "folder"
-    style: "powerline"
-    template: "   {{ .Path }} "
-  - type: "git"
-    background: "#fffb38"
-    background_templates:
-    - "{{ if or (.Working.Changed) (.Staging.Changed) }}#FF9248{{ end }}"
-    - "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#ff4500{{ end }}"
-    - "{{ if gt .Ahead 0 }}#B388FF{{ end }}"
-    - "{{ if gt .Behind 0 }}#B388FF{{ end }}"
-    foreground: "#193549"
-    leading_diamond: ""
-    powerline_symbol: ""
-    properties:
-      branch_max_length: 25
-      fetch_stash_count: true
-      fetch_status: true
-      fetch_upstream_icon: true
-    style: "powerline"
-    template: " {{ .UpstreamIcon }}{{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed
-      }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed)
-      }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if
-      gt .StashCount 0 }}  {{ .StashCount }}{{ end }} "
-    trailing_diamond": ""
-  - type: "node"
-    background: "#6CA35E"
-    foreground: "#ffffff"
-    powerline_symbol: ""
-    properties:
-      fetch_version": true
-    style: "powerline"
-    template: "  {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{
-      .Full }} "
-  - type: "go"
-    background: "#8ED1F7"
-    foreground: "#111111"
-    powerline_symbol: ""
-    properties:
-      fetch_version: true
-    style: "powerline"
-    template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-  - type: "julia"
-    background: "#4063D8"
-    foreground: "#111111"
-    powerline_symbol: ""
-    properties:
-      fetch_version: true
-    style: "powerline"
-    template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-  - type: "python"
-    background: "#FFDE57"
-    foreground: "#111111"
-    powerline_symbol: ""
-    properties:
-      display_mode": "files"
-      fetch_virtual_env": false
-    style: "powerline"
-    template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-  - type: "ruby"
-    background: "#AE1401"
-    foreground: "#ffffff"
-    powerline_symbol: ""
-    properties:
-      display_mode: "files"
-      fetch_version: true
-    style: "powerline"
-    template": "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-  - type: "php"
-    background: "#4063D8"
-    foreground: "#ffffff"
-    powerline_symbol: ""
-    properties:
-      display_mode: "files"
-    style: "powerline"
-    template: "  {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-  - type: "azfunc"
-    background: "#FEAC19"
-    foreground: "#ffffff"
-    powerline_symbol: ""
-    properties:
-      display_mode: "files"
-      fetch_version: false
-    style: "powerline"
-    template: " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
-  - type: "aws"
-    background_templates: 
-    - "{{if contains \"default\" .Profile}}#FFA400{{end}}"
-    - "{{if contains \"jan\" .Profile}}#f1184c{{end}}"
-    foreground: "#ffffff"
-    powerline_symbol: ""
-    properties:
-      display_default: false
-    style: "powerline"
-    template: "  {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} "
-  - type: "root"
-    background: "#ffff66"
-    foreground: "#111111"
-    powerline_symbol: ""
-    style: "powerline"
-    template: " # "
-  #- type: "executiontime"
-  #  background: "#83769c"
-  #  foreground: "#ffffff"
-  #  properties:
-  #    always_enabled: true
-  #  style: "plain"
-  #  template: "<transparent></> ﮫ{{ .FormattedMs }}⠀"
-  # - type: exit
-  #   background: "#00897b"
-  #   background_templates: 
-  #   - "{{ if gt .Code 0 }}#e91e63{{ end }}"
-  #   foreground: "#ffffff"
-  #   properties:
-  #     always_enabled: true
-  #   style: "diamond"
-  #   template: "<parentBackground></>  "
-  #   trailing_diamond: ""
-# - type: "rprompt"
-#   segments: 
-#   - type: "shell"
-#     background: "#0077c2"
-#     foreground: "#ffffff"
-#     style: "plain"
-#     template: "<transparent></>  {{ .Name }} <transparent,#0077c2></>"
-#   - type: "ytm"
-#     background: "#1BD760"
-#     foreground: "#111111"
-#     invert_powerline: true
-#     powerline_symbol: ""
+  - type: prompt
+    alignment: left
+    segments:
+      - properties:
+          cache_duration: none
+        template: '{{ if .WSL }}WSL {{ end }}{{ .Icon }} '
+        foreground: '#ffffff'
+        background: transparent
+        type: os
+        style: plain
+      - properties:
+          cache_duration: none
+        template: " \uF007 {{ .UserName }} "
+        foreground: '#000000'
+        background: '#FDD835'
+        type: session
+        style: plain
+      - properties:
+          cache_duration: none
+        leading_diamond: ""
+        template: " {{if .SSHSession }}\U000F0718{{ else }}\U000F01C5{{ end }} {{ .HostName }} "
+        foreground: '#FDD835'
+        background: '#000000'
+        type: session
+        style: diamond
+      - properties:
+          cache_duration: none
+          folder_separator_icon: " \uE0B1 "
+          home_icon: "\uF015"
+          style: folder
+        template: " \U000F024B  {{ .Path }}{{ if not .Writable }} \U000F073E{{ end }} "
+        foreground: '#ffffff'
+        powerline_symbol: "\uE0B0"
+        background: '#ff479c'
+        type: path
+        style: powerline
+      - properties:
+          cache_duration: none
+          fetch_version: true
+          fetch_sdk_version: true
+        template: " \U000F0AAA {{ .Full}} "
+        foreground: '#ffffff'
+        powerline_symbol: "\uE0B0"
+        background: '#512bd4'
+        type: dotnet
+        style: powerline
+      - properties:
+          cache_duration: none
+          fetch_version: true
+        template: " \U000F0399 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
+        foreground: '#ffffff'
+        powerline_symbol: "\uE0B0"
+        background: '#6CA35E'
+        type: node
+        style: powerline
+      - properties:
+          cache_duration: none
+          fetch_version: true
+        template: " \uE724 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+        foreground: '#111111'
+        powerline_symbol: "\uE0B0"
+        background: '#8ED1F7'
+        type: go
+        style: powerline
+      - properties:
+          cache_duration: none
+          fetch_version: true
+        template: " \uE80D {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+        foreground: '#111111'
+        powerline_symbol: "\uE0B0"
+        background: '#4063D8'
+        type: julia
+        style: powerline
+      - properties:
+          cache_duration: none
+          display_mode: files
+          fetch_virtual_env: false
+        template: " \U000F0720 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+        foreground: '#111111'
+        powerline_symbol: "\uE0B0"
+        background: '#FFDE57'
+        type: python
+        style: powerline
+      - properties:
+          cache_duration: none
+          display_mode: files
+          fetch_version: true
+        template: " \uE739 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+        foreground: '#ffffff'
+        powerline_symbol: "\uE0B0"
+        background: '#AE1401'
+        type: ruby
+        style: powerline
+      - properties:
+          cache_duration: none
+          display_mode: files
+        template: " \U000F071F {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+        foreground: '#ffffff'
+        powerline_symbol: "\uE0B0"
+        background: '#4063D8'
+        type: php
+        style: powerline
+      - properties:
+          cache_duration: none
+          display_mode: files
+          fetch_version: false
+        template: " \uF0E7 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+        foreground: '#ffffff'
+        powerline_symbol: "\uE0B0"
+        background: '#FEAC19'
+        type: azfunc
+        style: powerline
+      - properties:
+          cache_duration: none
+          display_default: false
+        template: " \uE7AD {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} "
+        foreground: '#ffffff'
+        powerline_symbol: "\uE0B0"
+        type: aws
+        style: powerline
+        background_templates:
+          - '{{if contains "default" .Profile}}#FFA400{{end}}'
+          - '{{if contains "jan" .Profile}}#f1184c{{end}}'
+      - properties:
+          branch_max_length: 25
+          cache_duration: none
+          fetch_stash_count: true
+          fetch_status: true
+          fetch_upstream_icon: true
+        leading_diamond: "\uE0B6"
+        template: " {{ .UpstreamIcon }}{{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }} \uF044 {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uF046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }} \U000F0193 {{ .StashCount }}{{ end }} "
+        foreground: '#193549'
+        powerline_symbol: "\uE0B0"
+        background: '#fffb38'
+        type: git
+        style: powerline
+        background_templates:
+          - '{{ if or (.Working.Changed) (.Staging.Changed) }}#FF9248{{ end }}'
+          - '{{ if and (gt .Ahead 0) (gt .Behind 0) }}#ff4500{{ end }}'
+          - '{{ if gt .Ahead 0 }}#B388FF{{ end }}'
+          - '{{ if gt .Behind 0 }}#B388FF{{ end }}'
+      - properties:
+          cache_duration: none
+        template: ' # '
+        foreground: '#111111'
+        powerline_symbol: "\uE0B0"
+        background: '#ffff66'
+        type: root
+        style: powerline
+
+# Optional blocks from git config:
+# - type: rprompt
+#   segments:
+#   - type: executiontime
 #     properties:
-#       paused_icon: " "
-#       playing_icon: " "
-#     style: "powerline"
-#     template: "  {{ .Icon }}{{ if ne .Status "stopped" }}{{ .Artist }} - {{ .Track }}{{ end }}"
-#   - type: "battery"
+#       cache_duration: none
+#       always_enabled: true
+#     template: "<transparent>\uE0B0</> \uFBAD {{ .FormattedMs }}⠀"
+#     foreground: "#ffffff"
+#     background: "#83769c"
+#     style: plain
+#   - type: battery
+#     properties:
+#       cache_duration: none
+#       charged_icon: "\uE22F "
+#       charging_icon: "\uE234 "
+#       discharging_icon: "\uE231 "
+#     template: " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }}\uF4A5 "
+#     foreground: "#ffffff"
 #     background: "#f36943"
+#     invert_powerline: true
+#     powerline_symbol: "\uE0B2"
+#     style: powerline
 #     background_templates:
-#     - "{{if eq \"Charging\" .State.String}}#40c4ff{{end}}"
-#     - "{{if eq \"Discharging\" .State.String}}#ff5722{{end}}"
-#     - "{{if eq \"Full\" .State.String}}#4caf50{{end}}"
-#     foreground: "#ffffff"
-#     invert_powerline: true
-#     powerline_symbol: ""
-#     properties:
-#       charged_icon: " "
-#       charging_icon: " "
-#       discharging_icon: " "
-#     style: "powerline"
-#     template: " {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }}\uf295 "
-#   - type: "time"
-#     background: "#2e9599"
-#     foreground: "#111111"
-#     invert_powerline: true
-#     leading_diamond: ""
-#     style: "diamond"
-#     template: " {{ .CurrentDate | date .Format }} "
-#     trailing_diamond: ""
+#       - '{{if eq "Charging" .State.String}}#40c4ff{{end}}'
+#       - '{{if eq "Discharging" .State.String}}#ff5722{{end}}'
+#       - '{{if eq "Full" .State.String}}#4caf50{{end}}'
+
+# Icon Reference
+# | Purpose                  | NF Name                     | Glyph | Hex Code   |
+# |--------------------------|-----------------------------|-------|------------|
+# | Session (User)           | nf-fa-user                  |      | \uF007     |
+# | Session (SSH)            | nf-md-connection            | 󰌘     | \U000F0718 |
+# | Session (Host)           | nf-md-desktop_tower         | 󰇅     | \U000F01C5 |
+# | Path (Folder)            | nf-md-folder                | 󰉋     | \U000F024B |
+# | Path (Home)              | nf-fa-home                  |      | \uF015     |
+# | Path (Lock)              | nf-md-lock                  | 󰌾     | \U000F073E |
+# | Path (Separator)         | nf-pl-left_soft_divider     |      | \uE0B1     |
+# | Git (Leading)            | nf-pl-left_hard_divider_arc |    | \uE0B6     |
+# | Git (Modified)           | nf-fa-edit                  |      | \uF044     |
+# | Git (Staged)             | nf-fa-check_square_o        |      | \uF046     |
+# | Git (Stash)              | nf-md-archive               | 󰆓     | \U000F0193 |
+# | .NET                     | nf-md-microsoft_dot_net     | 󰪮     | \U000F0AAA |
+# | Node                     | nf-md-nodejs                | 󰎙     | \U000F0399 |
+# | Go                       | nf-dev-go                   |      | \uE724     |
+# | Julia                    | nf-seti-julia               |      | \uE80D     |
+# | Python                   | nf-md-language_python       | 󰌠     | \U000F0720 |
+# | Ruby                     | nf-dev-ruby                 |      | \uE739     |
+# | PHP                      | nf-md-language_php          | 󰌟     | \U000F071F |
+# | Azure Functions          | nf-fa-bolt                  |      | \uF0E7     |
+# | AWS                      | nf-dev-aws                  |      | \uE7AD     |
+# | Powerline Hard Separator | nf-pl-left_hard_divider     |      | \uE0B0     |
+# | Powerline Right Separator| nf-pl-right_hard_divider    |      | \uE0B2     |
+# | Execution Time           | nf-mdi-timer                | ﮫ     | \uFBAD     |
+# | Battery Charged          | nf-md-battery               |      | \uE22F     |
+# | Battery Charging         | nf-md-battery_charging      |      | \uE234     |
+# | Battery Discharging      | nf-md-battery_negative      |      | \uE231     |
+# | Battery Percent          | nf-md-percent               |      | \uF4A5     |
