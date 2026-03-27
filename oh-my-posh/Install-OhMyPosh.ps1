@@ -14,10 +14,12 @@ Write-Output "- Add 'oh-my-posh init pwsh | Invoke-Expression' to $PROFILE"
 if (-Not (Test-Path -Path $PROFILE)) {
     Write-Host -NoNewline "  Adding Oh My Posh to profile automatically..."
     [void](New-Item -Path $PROFILE -Type File -Force -Value @'
+
 $host.PrivateData.ErrorForegroundColor = "White"
 $host.PrivateData.ErrorBackgroundColor = "Red"
 
 '@)
-    Add-Content -Path $PROFILE -Value "oh-my-posh init pwsh -c ""$HOME\AppData\Local\Programs\oh-my-posh\themes\tarekf.omp.yaml"" | Invoke-Expression"
+
+    Add-Content -Path $PROFILE -Value "@(&""(Get-Command oh-my-posh.exe).Path"" init pwsh -c ""$HOME\AppData\Local\Programs\oh-my-posh\themes\tarekf.omp.yaml"" --print) -Join ""`n"" | Invoke-Expression"
     Write-Host " Done"
 }
