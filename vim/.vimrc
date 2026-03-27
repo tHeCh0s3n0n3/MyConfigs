@@ -74,8 +74,8 @@ endfunction
    " Default Color Scheme (see below for file specific Color Schemes
    " disabled to keep the default theme while building a list of files and the colorscheme for each
    "color elflord
-   autocmd FileType vim colorscheme koehler | call SetMySpellColors()
-
+   autocmd FileType vim colorscheme koehler
+   autocmd FileType gitconfig colorscheme koehler
    nnoremap <F10> :call GetEverythingUnderCursor()<CR>
 
    
