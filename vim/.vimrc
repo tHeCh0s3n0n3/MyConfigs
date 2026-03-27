@@ -1,6 +1,48 @@
 "" My .vimrc file
 
 """
+" Functions
+"""
+function! GetEverythingUnderCursor()
+   " 1. Syntax Engine
+   let l:synID = synID(line("."), col("."), 1)
+   let l:synName = synIDattr(l:synID, "name")
+   let l:loName = synIDattr(synIDtrans(l:synID), "name")
+
+   " 2. Spelling Overlay
+   let [l:word, l:type] = spellbadword()
+   let l:spellOut = (l:type != "") ? " SPELL<Spell" . substitute(l:type, "^.", "\\u&", "") . ">" : ""
+
+   " 3. Search/Match Overlay
+   " This checks if the current cursor position is part of a matchadd() or :match
+   let l:matchOut = ""
+   for l:m in getmatches()
+      " Manual check for matches is complex; simplified here to show if ANY match exists
+      " Many plugins use matches for 'Current Word' highlighting
+   endfor
+
+   " 4. Search Highlight (Check if cursor is on current search pattern)
+   let l:searchOut = (v:hlsearch && @/ != "" && expand("<cword>") =~ @/) ? " [ON_SEARCH_RESULT]" : ""
+
+   echo "hi<" . l:synName . "> lo<" . l:loName . ">" . l:spellOut . l:searchOut
+endfunction
+
+function! SetMySpellColors()
+   " Use 'hi' directly without 'clear' to override the specific attributes
+   hi SpellBad cterm=underline ctermfg=NONE ctermbg=NONE gui=underline guibg=NONE guifg=NONE guisp=NONE 
+endfunction
+
+function! SmartHome()
+   let l:cursor_col = col('.')
+   " Move to first non-blank character
+   normal! ^
+   " If we didn't move (meaning we were already there), move to column 1
+   if l:cursor_col == col('.')
+      normal! 0
+   endif
+endfunction
+
+"""
 " General
 """
    " Reset all values to their defaults
@@ -18,11 +60,24 @@
 """
 " Colors
 """
-   " Color theme
-   color elflord
 
    " Enable syntax highlighting
    syntax on
+
+   augroup CustomSpellHighlights
+      autocmd!
+      " ColorScheme handles manual changes (:colorscheme ...)
+      " VimEnter handles the very end of the startup sequence
+      autocmd ColorScheme,VimEnter * call SetMySpellColors()
+   augroup END
+
+   " Default Color Scheme (see below for file specific Color Schemes
+   " disabled to keep the default theme while building a list of files and the colorscheme for each
+   "color elflord
+   autocmd FileType vim colorscheme koehler | call SetMySpellColors()
+
+   nnoremap <F10> :call GetEverythingUnderCursor()<CR>
+
    
    " Highlight current line and cursor
    set cursorline
@@ -55,8 +110,6 @@
    
    " Enable spelling and configure it
    set spell 
-   hi clear SpellBad
-   hi SpellBad cterm=underline gui=underline
 
    " Enable modelines
    set modeline
@@ -122,6 +175,12 @@
    inoremap <F3> <C-O>:tabn<CR>
    nnoremap <F2> :tabp<CR>
    nnoremap <F3> :tabn<CR>
+
+   " Map the Home key in Normal, Visual, and Insert modes (SmartHome)
+   nnoremap <Home> :call SmartHome()<CR>
+   vnoremap <Home> :<C-u>call SmartHome()<CR>gv
+   inoremap <Home> <C-o>:call SmartHome()<CR>
+   nnoremap 0 :call SmartHome()<CR>
 
 """
 " Plug-ins
