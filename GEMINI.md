@@ -39,6 +39,9 @@ The `copy-configs.sh` script is the primary tool for Unix-like environments:
 
 # Targeted component update
 ./copy-configs.sh --vim --git
+
+# Deploy to a specific user's home (as root)
+./copy-configs.sh --user <username> --init
 ```
 
 ### Windows Deployment
@@ -59,3 +62,9 @@ The `Copy-Configs.ps1` script handles Windows environment setup:
     *   Bash/Vim: 2 or 3 spaces (follow existing file headers/modelines).
     *   YAML: 2 spaces.
 *   **Parity:** When adding new configuration types, ideally update both the Bash and PowerShell scripts to ensure platform consistency.
+
+## Agent Instructions (Guardrails)
+
+*   **Ignore `zabbix-custom/`:** This directory contains legacy/external scripts. Do **NOT** suggest refactors, documentation, or changes for these files unless explicitly asked.
+*   **Root Usage:** If the user is running as root, always suggest using the `--user <username>` flag to ensure configs are placed in the correct home directory with proper ownership.
+*   **Script Parity:** Changes to deployment logic in `copy-configs.sh` (Bash) should be mirrored in `Copy-Configs.ps1` (PowerShell) whenever possible.
