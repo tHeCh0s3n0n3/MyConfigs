@@ -6,6 +6,7 @@ COLOR_RESET=$'\001\e[0m'
 DO_GIT=0
 DO_VIM=0
 DO_OMP=0
+DO_BASH_ALIASES=0
 INTERACTIVE=1
 TARGET_USER=""
 
@@ -29,6 +30,7 @@ while [[ "$#" -gt 0 ]]; do
       DO_GIT=1
       DO_VIM=1
       DO_OMP=1
+      DO_BASH_ALIASES=1
       INTERACTIVE=0
       ;;
     --git)
@@ -43,6 +45,10 @@ while [[ "$#" -gt 0 ]]; do
       DO_OMP=1
       INTERACTIVE=0
       ;;
+    --bash-aliases)
+      DO_BASH_ALIASES=1
+      INTERACTIVE=0
+      ;;
     -i|--interactive)
       INTERACTIVE=1
       ;;
@@ -51,7 +57,7 @@ while [[ "$#" -gt 0 ]]; do
       shift
       ;;
     -h|--help)
-      echo "Usage: $0 [--init] [--git] [--vim] [--oh-my-posh] [-i|--interactive] [--user <username>]"
+      echo "Usage: $0 [--init] [--git] [--vim] [--oh-my-posh] [--bash-aliases] [-i|--interactive] [--user <username>]"
       exit 0
       ;;
     *)
@@ -105,6 +111,7 @@ if [[ "$INTERACTIVE" -eq 1 ]]; then
   if ask_to_copy "Copy Git configs (${COLOR_FILE}.gitconfig${COLOR_RESET} and ${COLOR_FILE}.gitattributes${COLOR_RESET}) to target directory?"; then DO_GIT=1; fi
   if ask_to_copy "Copy vim files to target directory?"; then DO_VIM=1; fi
   if ask_to_copy "Copy Oh My Posh configs to ${COLOR_FILE}${TARGET_HOME}/.poshthemes${COLOR_RESET}?"; then DO_OMP=1; fi
+  if ask_to_copy "Copy Bash aliases (${COLOR_FILE}.bash_aliases${COLOR_RESET}) to target directory?"; then DO_BASH_ALIASES=1; fi
 fi
 
 if [[ "$DO_GIT" -eq 1 ]]; then
@@ -156,6 +163,11 @@ if [[ "$DO_OMP" -eq 1 ]]; then
       sudo cp ./oh-my-posh/tarekf.omp.yaml /root/.poshtheme.omp.yaml
     fi
   fi
+fi
+
+if [[ "$DO_BASH_ALIASES" -eq 1 ]]; then
+  echo -e "Copying Bash aliases to target directory..."
+  smart_copy ./bash/.bash_aliases "$TARGET_HOME/.bash_aliases"
 fi
 
 # vim: syntax=sh ts=2 sw=2 sts=2 sr et
