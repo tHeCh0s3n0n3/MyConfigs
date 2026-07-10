@@ -22,6 +22,7 @@ The project aims to maintain a unified development environment by managing confi
 | `.gitconfig` | User identification, color UI settings, and common aliases (`co`, `ci`, `st`, `hist`). |
 | `.gitattributes` | Enforces LF for `.sh` and `.yaml`, and CRLF for `.ps1` files. |
 | `vim/.vimrc` | Main Vim configuration with status line, tab settings, and custom key mappings. |
+| `bash/.bash_aliases` | Custom aliases and functions for Bash. |
 | `oh-my-posh/` | Theme definition for the Oh My Posh shell prompt. |
 | `zabbix-custom/` | Zabbix agent user parameters and Python monitoring scripts. |
 
@@ -38,7 +39,7 @@ The `copy-configs.sh` script is the primary tool for Unix-like environments:
 ./copy-configs.sh --init
 
 # Targeted component update
-./copy-configs.sh --vim --git
+./copy-configs.sh --vim --git --bash-aliases
 
 # Deploy to a specific user's home (as root)
 ./copy-configs.sh --user <username> --init
