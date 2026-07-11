@@ -51,3 +51,13 @@ else
     alias la='ls -A'
     alias l='ls -CF'
 fi
+
+# --- [ Docker Configuration ] ----------------------------------------------------
+if command -v docker >/dev/null 2>&1; then
+    
+    # Standard docker ps
+    alias dps='sudo docker ps'
+    
+    # Pretty docker ps
+    alias dockerps='sudo docker ps --format "table {{.Names}}\t{{.Status}}\t{{.RunningFor}}\t{{.Command}}"'
+fi
